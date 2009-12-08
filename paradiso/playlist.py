@@ -33,8 +33,9 @@ class Playlist(object):
 
     def __iter__(self):
         self._index = 0
-        for idx in range(len(self.items)):
-            yield self.items[self._index]
+        tmp = list(self.items)
+        for idx in range(len(tmp)):
+            yield tmp[idx]
             self._index += 1
 
     def pop(self):
@@ -54,7 +55,8 @@ class FilePlaylist(object):
 
     def __exit__(self, type, value, traceback):
         if type is ValueError:
-            sys.stderr.write(value)
+            import traceback
+            print traceback.format_exc()
 
         if not self.write:
             return
@@ -84,16 +86,13 @@ class FilePlaylist(object):
     def __iter__(self):
         for key in self._fpaths:
             self._current_file = key
-            tmp = [x for x in self.item_dict[key]]
-            for item in tmp:
+            for item in list(self.item_dict[key]):
                 self._current_item = item
                 yield item
 
     def pop(self):
         if self._current_file is None or self._current_item is None:
             return False
-
-        print "removing %s" % self._current_item
 
         try:
             self.item_dict[self._current_file].remove(self._current_item)
