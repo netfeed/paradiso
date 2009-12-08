@@ -18,10 +18,9 @@ def showtime(fname, fullscreen):
     if (fullscreen):
         player.append('-fs')
     player.extend(['-monitoraspect', '16:9', '-aspect', '16:9'])
-    
-    sys.stdout.write("Playing %s\r\n" % fpath)
-
     player.append('-really-quiet')
+
+    sys.stdout.write("Playing %s\r\n" % fpath)
 
     #if re.search('(rar)$', fname):
 #    if fname.endswith('rar'):
@@ -33,7 +32,7 @@ def showtime(fname, fullscreen):
     player.append(fpath)
     p = subprocess.Popen(player)
     
-    p.wait()
+    p.communicate()
         
 def main(options, args):
     key = 'playlist'
