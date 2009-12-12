@@ -13,8 +13,6 @@ class Playlist(object):
         self.write = write
         self.path = path
         
-        self._index = 0
-
         for item in args:
             path = os.path.abspath(item)
             if os.path.isdir(path):
@@ -32,16 +30,11 @@ class Playlist(object):
             create_playlist(self, self.path)
 
     def __iter__(self):
-        self._index = 0
-        tmp = list(self.items)
-        for idx in range(len(tmp)):
-            yield tmp[idx]
-            self._index += 1
+        for item in list(self.items):
+            yield item
 
-    def pop(self):
-        self.items.pop(self._index)
-        self._index -= 1
-        
+    def rpop(self, index=0):
+        self.items.pop(index)
         return True
 
 class FilePlaylist(object):
@@ -51,7 +44,6 @@ class FilePlaylist(object):
 
         self._fpaths = args
         self._current_file = None
-        self._current_item = None
 
     def __exit__(self, type, value, traceback):
         if type is ValueError:
@@ -87,15 +79,14 @@ class FilePlaylist(object):
         for key in self._fpaths:
             self._current_file = key
             for item in list(self.items[key]):
-                self._current_item = item
                 yield item
 
-    def pop(self):
-        if self._current_file is None or self._current_item is None:
+    def rpop(self, index=0):
+        if self._current_file is None:
             return False
 
         try:
-            self.items[self._current_file].remove(self._current_item)
+            self.items[self._current_file].pop(index)
         except ValueError, e:
             return False
 

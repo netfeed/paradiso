@@ -43,7 +43,7 @@ def main(options, args):
         for item in playlist:
             try:
                 showtime(item, options.fullscreen)
-                if options.delete and not playlist.pop():
+                if options.delete and not playlist.rpop():
                     raise ValueError("Something went wrong while poping the playlist")
             except KeyboardInterrupt:
                 break
