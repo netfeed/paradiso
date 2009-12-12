@@ -46,7 +46,7 @@ class Playlist(object):
 
 class FilePlaylist(object):
     def __init__(self, write=False, path=None, *args):
-        self.item_dict = {}
+        self.items = {}
         self.write = write
 
         self._fpaths = args
@@ -61,12 +61,12 @@ class FilePlaylist(object):
         if not self.write:
             return
 
-        for fpath in self.item_dict.iterkeys():
-            if len(self.item_dict[fpath]) == 0:
+        for fpath in self.items.iterkeys():
+            if len(self.items[fpath]) == 0:
                 os.remove(fpath)
             
             with open(fpath, 'w') as f:
-                for item in self.item_dict[fpath]:
+                for item in self.items[fpath]:
                     f.write('%s\r\n' % item)
 
     def __enter__(self):
@@ -77,16 +77,16 @@ class FilePlaylist(object):
                     if not os.path.exists(line):
                         continue
 
-                    if fpath not in self.item_dict:
-                        self.item_dict[fpath] = []
-                    self.item_dict[fpath].append(line)
+                    if fpath not in self.items:
+                        self.items[fpath] = []
+                    self.items[fpath].append(line)
         
         return self
 
     def __iter__(self):
         for key in self._fpaths:
             self._current_file = key
-            for item in list(self.item_dict[key]):
+            for item in list(self.items[key]):
                 self._current_item = item
                 yield item
 
@@ -95,7 +95,7 @@ class FilePlaylist(object):
             return False
 
         try:
-            self.item_dict[self._current_file].remove(self._current_item)
+            self.items[self._current_file].remove(self._current_item)
         except ValueError, e:
             return False
 
