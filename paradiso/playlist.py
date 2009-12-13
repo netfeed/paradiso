@@ -27,7 +27,7 @@ class Playlist(object):
 
     def __exit__(self, type, value, traceback):
         if self.path is not None and self.write:
-            create_playlist(self, self.path)
+            create_playlist(self.items, self.path)
 
     def __iter__(self):
         for item in list(self.items):
