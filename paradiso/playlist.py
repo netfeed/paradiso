@@ -57,9 +57,7 @@ class FilePlaylist(object):
             if len(self.items[fpath]) == 0:
                 os.remove(fpath)
             
-            with open(fpath, 'w') as f:
-                for item in self.items[fpath]:
-                    f.write('%s\r\n' % item)
+            create_playlist(self.items[fpath], fpath)
 
     def __enter__(self):
         for fpath in self._fpaths:
