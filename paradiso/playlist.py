@@ -26,12 +26,24 @@ class Playlist(object):
         return self
 
     def __exit__(self, type, value, traceback):
-        if self.path is not None and self.write:
-            create_playlist(self.items, self.path)
+        if self.path is None:
+            return
+        
+        if not self.write:
+            return
+        
+        if os.path.exists(self.path) and len(self.items) == 0:
+            os.remove(self.path)
+            return
+        
+        create_playlist(self.items, self.path)
 
     def __iter__(self):
         for item in list(self.items):
             yield item
+            
+    def __len__(self):
+        return len(self.items)
 
     def rpop(self, index=0):
         if len(self.items) == 0:
@@ -55,30 +67,24 @@ class FilePlaylist(object):
         if not self.write:
             return
 
-        for fpath in self.items.iterkeys():
-            if len(self.items[fpath]) == 0:
-                os.remove(fpath)
-            
-            create_playlist(self.items[fpath], fpath)
+        for fpath in self.items:
+            self.items[fpath].__exit__(type, value, traceback)
 
     def __enter__(self):
         for fpath in self._fpaths:
+            items = []
             with open(fpath, 'r') as f:
                 for line in f.readlines():
-                    line = line.strip("\r\n")
-                    if not os.path.exists(line):
-                        continue
-
-                    if fpath not in self.items:
-                        self.items[fpath] = []
-                    self.items[fpath].append(line)
+                    items.append(line.strip("\r\n"))
+        
+            self.items[fpath] = Playlist(self.write, fpath, *items)
         
         return self
 
     def __iter__(self):
         for key in self._fpaths:
             self._current_file = key
-            for item in list(self.items[key]):
+            for item in self.items[key]:
                 yield item
 
     def rpop(self, index=0):
@@ -88,4 +94,4 @@ class FilePlaylist(object):
         if len(self.items[self._current_file]) == 0:
             return None
 
-        return self.items[self._current_file].pop(index)
+        return self.items[self._current_file].rpop(index)
