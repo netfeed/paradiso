@@ -34,8 +34,10 @@ class Playlist(object):
             yield item
 
     def rpop(self, index=0):
-        self.items.pop(index)
-        return True
+        if len(self.items) == 0:
+            return None
+        
+        return self.items.pop(index)
 
 class FilePlaylist(object):
     def __init__(self, write=False, path=None, *args):
@@ -81,11 +83,9 @@ class FilePlaylist(object):
 
     def rpop(self, index=0):
         if self._current_file is None:
-            return False
+            return None
 
-        try:
-            self.items[self._current_file].pop(index)
-        except ValueError, e:
-            return False
+        if len(self.items[self._current_file]) == 0:
+            return None
 
-        return True
+        return self.items[self._current_file].pop(index)
