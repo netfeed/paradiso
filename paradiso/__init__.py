@@ -15,7 +15,7 @@ playlists = {
     'file_playlist' : FilePlaylist
 }
 
-def showtime(fname, fullscreen):
+def showtime(fname, fullscreen, device=None):
     fpath = os.path.abspath(fname)
     
     player = ['mplayer']
@@ -23,6 +23,12 @@ def showtime(fname, fullscreen):
         player.append('-fs')
     player.extend(['-monitoraspect', '16:9', '-aspect', '16:9'])
     player.append('-really-quiet')
+
+    if device:
+        if sys.platform == 'darwin':
+            player.extend(['-vo', 'corevideo:device_id=%d' % device])
+        else:
+            raise ValueError("I'm sorry, i can't handle display options for %s" % sys.platform)
 
     sys.stdout.write("Playing %s\r\n" % fpath)
 
@@ -46,7 +52,7 @@ def main(options, args):
     with playlists[key](options.write, options.path, *args) as playlist:
         for item in playlist:
             try:
-                showtime(item, options.fullscreen)
+                showtime(item, options.fullscreen, options.device)
                 if options.delete and playlist.rpop() is None:
                     raise ValueError("Something went wrong while poping the playlist")
             except KeyboardInterrupt:
@@ -61,5 +67,6 @@ def parse_cmdline():
     parser.add_option("-F", "--filepath", dest="path", default=None, type="string")
     parser.add_option("-p", "--playlist", dest="playlist", default=False, action="store_true")
     parser.add_option("-w", "--write", dest="write", default=False, action="store_true")
+    parser.add_option("-n", "--device", dest="device", default=None, type="int")
     
     return parser.parse_args()
