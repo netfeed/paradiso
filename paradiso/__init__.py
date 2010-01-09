@@ -30,7 +30,7 @@ def showtime(fname, fullscreen, device=None):
         else:
             raise ValueError("I'm sorry, i can't handle display options for %s" % sys.platform)
 
-    sys.stdout.write("Playing %s\r\n" % fpath)
+    sys.stdout.write("Playing %s\n" % fpath)
 
     #if re.search('(rar)$', fname):
 #    if fname.endswith('rar'):
@@ -49,6 +49,7 @@ def main(options, args):
     if options.playlist:
         key = 'file_playlist'
     
+    counter = 1
     with playlists[key](options.write, options.path, *args) as playlist:
         for item in playlist:
             try:
@@ -57,6 +58,10 @@ def main(options, args):
                     raise ValueError("Something went wrong while poping the playlist")
             except KeyboardInterrupt:
                 break
+            
+            if options.amount and counter >= options.amount:
+                break
+            counter += 1
 
     return 0
 
@@ -67,6 +72,7 @@ def parse_cmdline():
     parser.add_option("-F", "--filepath", dest="path", default=None, type="string")
     parser.add_option("-p", "--playlist", dest="playlist", default=False, action="store_true")
     parser.add_option("-w", "--write", dest="write", default=False, action="store_true")
-    parser.add_option("-n", "--device", dest="device", default=None, type="int")
+    parser.add_option("-D", "--device", dest="device", default=None, type="int")
+    parser.add_option("-n", "--amount", dest="amount", default=None, type="int")
     
     return parser.parse_args()
