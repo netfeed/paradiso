@@ -48,9 +48,9 @@ def main(options, args):
     key = 'playlist'
     if options.playlist:
         key = 'file_playlist'
-    
+
     counter = 1
-    with playlists[key](options.write, options.path, *args) as playlist:
+    with playlists[key](options.write, None, *args) as playlist:
         for item in playlist:
             try:
                 showtime(item, options.fullscreen, options.device)
@@ -69,7 +69,6 @@ def parse_cmdline():
     parser = optparse.OptionParser()
     parser.add_option("-d", "--delete", dest="delete", default=False, action="store_true")
     parser.add_option("-f", "--fullscreen", dest="fullscreen", default=False, action="store_true")
-    parser.add_option("-F", "--filepath", dest="path", default=None, type="string")
     parser.add_option("-p", "--playlist", dest="playlist", default=False, action="store_true")
     parser.add_option("-w", "--write", dest="write", default=False, action="store_true")
     parser.add_option("-D", "--device", dest="device", default=None, type="int")
