@@ -27,4 +27,4 @@ if __name__ == '__main__':
     items.extend(args[1:])
     
     playlist = Playlist(True, args[0], *items)
-    create_playlist(playlist, args[0], options.append)
+    create_playlist(playlist, options.append)

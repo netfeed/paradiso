@@ -4,10 +4,10 @@
 
 import os
 
-def create_playlist(playlist, fpath, append=False):
+def create_playlist(playlist, append=False):
     mode = 'a' if append else 'w'
         
-    with open(fpath, mode) as f:
+    with open(playlist.path, mode) as f:
         for item in playlist:
             f.write("%s\r\n" % item)
 
@@ -47,7 +47,7 @@ class Playlist(object):
             os.remove(self.path)
             return
         
-        create_playlist(self.items, self.path)
+        create_playlist(self)
 
     def __iter__(self):
         for item in list(self.items):
