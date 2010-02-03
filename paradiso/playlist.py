@@ -11,6 +11,13 @@ def create_playlist(playlist, fpath, append=False):
         for item in playlist:
             f.write("%s\r\n" % item)
 
+def read_playlist_file(fpath):
+    items = []
+    with open(fpath, 'r') as f:
+        for line in f.readlines():
+            items.append(line.strip("\r\n"))
+    return items
+
 class Playlist(object):
     def __init__(self, write=False, path=None, *args):
         self.items = []
@@ -76,11 +83,7 @@ class FilePlaylist(object):
 
     def __enter__(self):
         for fpath in self._fpaths:
-            items = []
-            with open(fpath, 'r') as f:
-                for line in f.readlines():
-                    items.append(line.strip("\r\n"))
-        
+            items = read_playlist_file(fpath)
             self.items[fpath] = Playlist(self.write, fpath, *items)
         
         return self
