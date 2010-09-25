@@ -14,26 +14,33 @@ module Paradiso
           items << line.sub(/[\r\n]+/, '')
         end
         
-        Playlist.new items
+        new items
       end
     end
     
     def initialize files
       @files = []
-      
+      @current_idx = -1
+            
       files.each do |file|
-        Find.find(file) do |f|
-          @files << f
+        begin 
+          tmp = []
+          
+          Find.find(file) do |f|
+            tmp << f unless File.directory? f
+          end
+          
+          @files += tmp.sort
+        rescue Errno::ENOENT => e
+          puts "Couldn't find: #{file}"
         end
       end
-      
-      @current_idx = -1
     end
 
     def + other
       raise ArgumentError "argument needs to be a of type Playlist" unless other.instance_of? Playlist
 
-      Playlist.new(files + other.files)
+      new(files + other.files)
     end
 
     def << other
