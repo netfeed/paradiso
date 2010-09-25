@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby -w
+
+require 'rubygems'
+require File.dirname(__FILE__) + '/../lib/paradiso'
+
+Paradiso.run ARGV
