@@ -14,45 +14,45 @@ module Paradiso
   class << self
     def run args
       args.options do |o|
-	      o.set_summary_indent '  '
-	      o.banner = "Usage: #{File.basename $0} [Options]"
-	      o.define_head "A simple mplayer CLI"
+        o.set_summary_indent '  '
+        o.banner = "Usage: #{File.basename $0} [Options]"
+        o.define_head "A simple mplayer CLI"
 
-	      o.on_tail("-h", "--help", "Show this help message.") { puts o; exit }
+        o.on_tail("-h", "--help", "Show this help message.") { puts o; exit }
 
-	      o.on("-a", "--amount n", Integer, "Play [n] items") { |amount|
-	        Options[:amount] = amount
-	      }
+        o.on("-a", "--amount n", Integer, "Play [n] items") { |amount|
+          Options[:amount] = amount
+        }
 	      
-	      o.on("-d", "--delete", "Delete items from paylist") { 
-	        Options[:delete] = true
-	      }
+        o.on("-d", "--delete", "Delete items from paylist") { 
+          Options[:delete] = true
+        }
 	      
-	      o.on("-f", "--fullscreen", "Fullscreen mode") { 
-	        Options[:fullscreen] = true
-	      }
+        o.on("-f", "--fullscreen", "Fullscreen mode") { 
+          Options[:fullscreen] = true
+        }
 	      
-	      o.on("-n", "--name path", String, "Playlist path to create") { |path|
-	        Options[:path] = path
-	      }
+        o.on("-n", "--name path", String, "Playlist path to create") { |path|
+          Options[:path] = path
+        }
 	      
-	      o.on("-p", "--playlist", "The argument is a playlist") { 
-	        Options[:playlist] = true
-	      }
+        o.on("-p", "--playlist", "The argument is a playlist") { 
+          Options[:playlist] = true
+        }
 	      
-	      o.on("-s", "--screen n", Integer, "Which screen to play from") { |screen|
-	        Options[:screen] = screen
-	      }
+        o.on("-s", "--screen n", Integer, "Which screen to play from") { |screen|
+          Options[:screen] = screen
+        }
 
-	      o.parse!
+        o.parse!
 
         if Options[:playlist] and args.size > 1 and not Options[:path]
-	        puts "Error: Can only handle one playlist"
-	        exit 1
+          puts "Error: Can only handle one playlist"
+          exit 1
         end
 	      
-	      paradiso = Paradiso.new Options, args
-	      paradiso.run
+        paradiso = Paradiso.new Options, args
+        paradiso.run
       end
     end
   end
@@ -66,7 +66,7 @@ module Paradiso
         @pl_file = args.pop
         @playlist = Playlist.create_from_file @pl_file
       else
-	      @playlist = Playlist.new args
+        @playlist = Playlist.new args
       end
     end
     
