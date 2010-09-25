@@ -1,3 +1,5 @@
+require 'find'
+
 module Paradiso
   class Playlist
     attr_reader :files
@@ -17,7 +19,14 @@ module Paradiso
     end
     
     def initialize files
-      @files = files
+      @files = []
+      
+      files.each do |file|
+        Find.find(file) do |f|
+          @files << f
+        end
+      end
+      
       @current_idx = -1
     end
 
