@@ -58,7 +58,7 @@ module Paradiso
       end
       start_point = 0 unless delete
       
-      if (start_point + 1 >= @files.size) and delete
+      if (start_point >= @files.size) and delete
         File.delete path
         return
       end
