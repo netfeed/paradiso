@@ -58,6 +58,11 @@ module Paradiso
       end
       start_point = 0 unless delete
       
+      if (start_point + 1 >= @files.size) and delete
+        File.delete path
+        return
+      end
+      
       File.open(path, 'w') do |f|
         @files[start_point..-1].each { |line| f.puts line }
       end
