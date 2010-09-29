@@ -1,4 +1,5 @@
 require 'optparse'
+require 'popen4'
 require 'paradiso/playlist'
 
 module Paradiso
@@ -61,6 +62,7 @@ module Paradiso
     def initialize options, args
       @options = options
       @pl_file = nil
+      @pid = nil
       
       if @options[:playlist] and not @options[:path]
         @pl_file = args.pop
@@ -81,9 +83,12 @@ module Paradiso
         end
 
         puts "Playing #{item}"        
-        `mplayer -really-quiet #{options_str} "#{item}"`
+        POpen4::popen4("mplayer  #{options_str} \"#{item}\"") do |stdout, stderr, stdin, pid|
+          @pid = pid
+        end
       end
     rescue Interrupt
+      Process.kill(9, @pid) if @pid
       puts "Exiting..."
     ensure
       if (@options[:path] or @options[:delete]) and @options[:playlist]

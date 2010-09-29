@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby -w
+#!/usr/bin/env ruby
 
 require 'rubygems'
 require File.dirname(__FILE__) + '/../lib/paradiso'
