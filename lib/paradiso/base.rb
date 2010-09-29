@@ -82,8 +82,10 @@ module Paradiso
           amount += 1
         end
 
-        puts "Playing #{item}"        
-        POpen4::popen4("mplayer  #{options_str} \"#{item}\"") do |stdout, stderr, stdin, pid|
+        puts "Playing #{item}"
+        
+        cmd = "mplayer #{options_str} \"#{item}\""
+        POpen4::popen4(cmd) do |stdout, stderr, stdin, pid|
           @pid = pid
         end
       end
