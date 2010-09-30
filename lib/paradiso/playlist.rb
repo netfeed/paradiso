@@ -27,7 +27,7 @@ module Paradiso
           tmp = []
           
           Find.find(file) do |f|
-            tmp << f unless File.directory? f
+            tmp << File.expand_path(f) unless File.directory? f
           end
           
           @files += tmp.sort
