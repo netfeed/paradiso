@@ -6,4 +6,4 @@
 require 'rubygems'
 require File.dirname(__FILE__) + '/../lib/paradiso'
 
-Paradiso.run ARGV
+Paradiso.run 

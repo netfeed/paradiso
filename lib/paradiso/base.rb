@@ -2,85 +2,22 @@
 # Copyright (c) 2010 Victor Bergöö
 # This program is made available under the terms of the MIT License.
 
-require 'json'
-require 'optparse'
 require 'popen4'
 require 'paradiso/playlist'
 
 module Paradiso
-  Options = {
-    :fullscreen => false,
-    :screen => 0,
-    :playlist => false,
-    :delete => false,
-    :amount => nil,
-    :path => nil,
-    :aspectratio => '16:9',
-  }
-  
-  class << self
-    def run args
-      config_file = File.expand_path('~/.paradiso')
-      if File.exist? config_file
-        begin
-          json = JSON.parse(File.open(config_file, 'r').read())
-          json.each_pair do |key, value|
-            Options[key.to_sym] = value
-          end
-        rescue JSON::ParserError => e
-          puts "Error: Parsing the config file failed, please check it"
-        end
-      end
-      
-      args.options do |o|
-        o.set_summary_indent '  '
-        o.banner = "Usage: #{File.basename $0} [Options]"
-        o.define_head "A simple mplayer CLI"
-
-        o.on_tail("-h", "--help", "Show this help message.") { puts o; exit }
-
-        o.on("-a", "--amount n", Integer, "Play [n] items") { |amount|
-          Options[:amount] = amount
-        }
-	      
-        o.on("-A", "--aspect-ratio n", String, "Aspect ratio - 16:9, 4:3..") { |ratio|
-          Options[:aspectratio] = ratio
-        }
-	      
-        o.on("-d", "--delete", "Delete items from paylist") { 
-          Options[:delete] = true
-        }
-	      
-        o.on("-f", "--fullscreen", "Fullscreen mode") { 
-          Options[:fullscreen] = true
-        }
-	      
-        o.on("-n", "--name path", String, "Playlist path to create") { |path|
-          Options[:path] = path
-        }
-	      
-        o.on("-p", "--playlist", "The argument is a playlist") { 
-          Options[:playlist] = true
-        }
-	      
-        o.on("-s", "--screen n", Integer, "Which screen to play from") { |screen|
-          Options[:screen] = screen
-        }
-
-        o.parse!
-
-        if Options[:playlist] and args.size > 1 and not Options[:path]
+  class Paradiso
+    class << self
+      def create options, args
+        if options[:playlist] and args.size > 1 and not options[:path]
           puts "Error: Can only handle one playlist"
           exit 1
         end
-	      
-        paradiso = Paradiso.new Options, args
-        paradiso.run
+        
+        new options, args
       end
     end
-  end
-
-  class Paradiso
+    
     def initialize options, args
       @options = options
       @pl_file = nil
@@ -122,10 +59,9 @@ module Paradiso
     end
     
     private
-    
+
     def handle_options
       str = []
-      
       ratio = @options[:aspectratio]
       
       str += ['-monitoraspect', ratio, '-aspect', ratio]
@@ -142,3 +78,4 @@ module Paradiso
     end
   end
 end
+
