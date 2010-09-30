@@ -2,6 +2,7 @@
 # Copyright (c) 2010 Victor Bergöö
 # This program is made available under the terms of the MIT License.
 
+require 'json'
 require 'optparse'
 require 'popen4'
 require 'paradiso/playlist'
@@ -19,6 +20,18 @@ module Paradiso
   
   class << self
     def run args
+      config_file = File.expand_path('~/.paradiso')
+      if File.exist? config_file
+        begin
+          json = JSON.parse(File.open(config_file, 'r').read())
+          json.each_pair do |key, value|
+            Options[key.to_sym] = value
+          end
+        rescue JSON::ParserError => e
+          puts "Error: Parsing the config file failed, please check it"
+        end
+      end
+      
       args.options do |o|
         o.set_summary_indent '  '
         o.banner = "Usage: #{File.basename $0} [Options]"
