@@ -14,6 +14,7 @@ module Paradiso
     :delete => false,
     :amount => nil,
     :path => nil,
+    :aspectratio => '16:9',
   }
   
   class << self
@@ -27,6 +28,10 @@ module Paradiso
 
         o.on("-a", "--amount n", Integer, "Play [n] items") { |amount|
           Options[:amount] = amount
+        }
+	      
+        o.on("-A", "--aspect-ratio n", String, "Aspect ratio - 16:9, 4:3..") { |ratio|
+          Options[:aspectratio] = ratio
         }
 	      
         o.on("-d", "--delete", "Delete items from paylist") { 
@@ -108,7 +113,9 @@ module Paradiso
     def handle_options
       str = []
       
-      str += ['-monitoraspect', '16:9', '-aspect', '16:9']
+      ratio = @options[:aspectratio]
+      
+      str += ['-monitoraspect', ratio, '-aspect', ratio]
       if @options[:fullscreen]
         str << "-fs"
       end
