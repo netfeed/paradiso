@@ -7,21 +7,15 @@ require 'paradiso/playlist'
 
 module Paradiso
   class Paradiso
-    class << self
-      def create options, args
-        if options[:playlist] and args.size > 1 and not options[:path]
-          puts "Error: Can only handle one playlist"
-          exit 1
-        end
-        
-        new options, args
-      end
-    end
-    
     def initialize options, args
       @options = options
       @pl_file = nil
       @pid = nil
+
+      if @options[:playlist] and args.size > 1 and not @options[:path]
+        puts "Error: Can only handle one playlist"
+        exit 1
+      end
       
       if @options[:playlist] and not @options[:path]
         @pl_file = args.pop

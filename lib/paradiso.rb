@@ -25,7 +25,7 @@ module Paradiso
       options = config_file 
       options, args = parse_cl!(options, ARGV)
       
-      para = Paradiso.create options, args
+      para = Paradiso.new options, args
       para.run
     end
     
