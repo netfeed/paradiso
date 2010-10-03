@@ -10,6 +10,8 @@ require 'optparse'
 require 'paradiso/base'
 
 module Paradiso
+  VERSION = File.read(File.dirname(__FILE__) + "/../VERSION").chomp
+  
   Options = {
     :fullscreen => false,
     :screen => 0,
@@ -54,6 +56,7 @@ module Paradiso
         o.define_head "A simple mplayer CLI"
 
         o.on_tail("-h", "--help", "Show this help message.") { puts o; exit }
+        o.on_tail("-v", "--version", "Show version number") { puts "Paradiso %s" % [VERSION]; exit}
 
         o.on("-a", "--amount n", Integer, "Play [n] items") { |amount|
           options[:amount] = amount
