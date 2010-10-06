@@ -60,9 +60,7 @@ module Paradiso
       ratio = @options[:aspectratio]
       
       str += ['-monitoraspect', ratio, '-aspect', ratio]
-      if @options[:fullscreen]
-        str << "-fs"
-      end
+      str << "-fs" if @options[:fullscreen]
       
       # more platforms needs to be added
       if RUBY_PLATFORM =~ /darwin10/
