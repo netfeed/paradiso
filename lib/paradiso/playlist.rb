@@ -18,12 +18,13 @@ module Paradiso
           items << line.sub(/[\r\n]+/, '')
         end
         
-        new items
+        new items, file
       end
     end
     
-    def initialize files
+    def initialize files, path=nil
       @files = []
+      @path = path
       @current_idx = -1
             
       files.each do |file|
@@ -52,30 +53,38 @@ module Paradiso
       
       @files << other.files
     end
+
+    def create delete=false 
+      sp = delete ? start_point : 0
+      
+      File.open(@path, 'w') do |f|
+        @files[sp..-1].each { |line| f.puts line }
+      end
+    end
     
-    def create path, delete=false 
-      # can this be made in a nicer way?
-      start_point = case @current_idx
-        when -1 then 0
-        when 0 then 1
-        else @current_idx + 1
-      end
-      start_point = 0 unless delete
-      
-      if (start_point >= @files.size) and delete
-        File.delete path
-        return
-      end
-      
-      File.open(path, 'w') do |f|
-        @files[start_point..-1].each { |line| f.puts line }
-      end
+    def delete
+      File.delete(@path) unless @path.nil?
     end
     
     def each
       @files.each_index do |idx| 
         yield @files[idx]
         @current_idx = idx
+      end
+    end
+    
+    def empty?
+      start_point >= @files.size
+    end
+    
+    private 
+    
+    def start_point
+      # can this be made in a nicer way?
+      case @current_idx
+        when -1 then 0
+        when 0 then 1
+        else @current_idx + 1
       end
     end
   end

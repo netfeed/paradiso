@@ -9,7 +9,6 @@ module Paradiso
   class Paradiso
     def initialize options, args
       @options = options
-      @pl_file = nil
       @pid = nil
 
       if @options[:playlist] and args.size > 1 and not @options[:path]
@@ -18,10 +17,9 @@ module Paradiso
       end
       
       if @options[:playlist] and not @options[:path]
-        @pl_file = args.pop
-        @playlist = Playlist.create_from_file @pl_file
+        @playlist = Playlist.create_from_file args.pop
       else
-        @playlist = Playlist.new args
+        @playlist = Playlist.new args, @options[:path]
       end
     end
     
@@ -46,9 +44,12 @@ module Paradiso
       Process.kill(9, @pid) if @pid
       puts "Exiting..."
     ensure
-      if (@options[:path] or @options[:delete]) and @options[:playlist]
-        file = @options[:path] ? @options[:path] : @pl_file
-        @playlist.create file, @options[:delete]
+      if @options[:delete] and @playlist.empty?
+        @playlist.delete
+      end
+      
+      if ((@options[:path] or @options[:delete]) and @options[:playlist]) and not @playlist.empty?
+        @playlist.create @options[:delete]
       end
     end
     
