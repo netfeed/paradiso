@@ -1,0 +1,48 @@
+= Paradiso
+
+A small lightweight command line interface for mplayer.
+
+== Install
+
+  sudo gem install paradiso
+
+== Usage
+
+To play files
+
+  paradiso file1 file2
+
+To create a playlist
+
+  paradiso -pn playlist file1 file2 dir1
+  
+To play a playlist and remove the items that has been already played
+
+  paradiso -pd playlist
+  
+== Config file
+
+Paradiso has some basic support for a config file 
+
+  touch ~/.paradiso
+  
+Sample config file, in JSON
+
+  {
+    "fullscreen" : true,
+    "aspectratio" : "16:10"
+  }
+
+== TODO
+
+* Handling rar-archives
+* Better playlist support
+* Other mediums then just avi et al(DVD, Bluray and so on)
+* Handle meta-data
+* Config stuff, file ratios and such.
+
+== Copyright
+
+Copyright (c) 2010 Victor Bergöö. See LICENSE for details.
+
+
