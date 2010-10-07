@@ -16,7 +16,7 @@ module Paradiso
       if @options[:playlist] and not @options[:path]
         args.each do |pl|
           unless File.exist? pl
-            puts "Error: playlist %s does not exist" % [pl]
+            puts "Warning: playlist %s does not exist" % [pl]
             next
           end
           
