@@ -26,12 +26,10 @@ Paradiso has some basic support for a config file
 
   touch ~/.paradiso
   
-Sample config file, in JSON
+Sample config file, in YAML
 
-  {
-    "fullscreen" : true,
-    "aspectratio" : "16:10"
-  }
+  fullscreen : true
+  aspectratio : "16:10"
 
 == TODO
 

@@ -11,7 +11,6 @@ begin
     gem.homepage = "http://github.com/netfeed/paradiso"
     gem.authors = ["Victor Bergoo"]
     gem.add_dependency "popen4"
-    gem.add_dependency "json"
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError

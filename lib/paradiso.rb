@@ -5,8 +5,9 @@
 dir = File.dirname(__FILE__)
 $LOAD_PATH.unshift(dir) unless $LOAD_PATH.include? dir
 
-require 'json'
 require 'optparse'
+require 'yaml'
+
 require 'paradiso/base'
 
 module Paradiso
@@ -36,13 +37,9 @@ module Paradiso
       
       config_file = File.expand_path('~/.paradiso')
       if File.exist? config_file
-        begin
-          json = JSON.parse(File.open(config_file, 'r').read())
-          json.each_pair do |key, value|
-            options[key.to_sym] = value
-          end
-        rescue JSON::ParserError => e
-          puts "Error: Parsing the config file failed, please check it"
+        yaml = YAML::load(File.open(config_file, 'r').read())
+        yaml.each_pair do |key, value|
+          options[key.to_sym] = value
         end
       end
 
