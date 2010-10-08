@@ -5,22 +5,23 @@
 
 Gem::Specification.new do |s|
   s.name = %q{paradiso}
-  s.version = "0.1.5"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Victor Bergoo"]
-  s.date = %q{2010-10-04}
+  s.date = %q{2010-10-08}
   s.default_executable = %q{paradiso}
   s.description = %q{A simplified mplayer command line interface}
   s.email = %q{victor.bergoo@gmail.com}
   s.executables = ["paradiso"]
   s.extra_rdoc_files = [
     "LICENSE",
-     "README.rst"
+     "README.rdoc"
   ]
   s.files = [
-    "LICENSE",
-     "README.rst",
+    ".gitignore",
+     "LICENSE",
+     "README.rdoc",
      "Rakefile",
      "VERSION",
      "bin/paradiso",
@@ -29,33 +30,23 @@ Gem::Specification.new do |s|
      "lib/paradiso/playlist.rb",
      "paradiso.gemspec"
   ]
-  s.has_rdoc = true
   s.homepage = %q{http://github.com/netfeed/paradiso}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.1}
+  s.rubygems_version = %q{1.3.7}
   s.summary = %q{A command line interface for mplayer}
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
-    s.specification_version = 2
+    s.specification_version = 3
 
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<popen4>, [">= 0"])
-      s.add_runtime_dependency(%q<json>, [">= 0"])
-      s.add_runtime_dependency(%q<popen4>, [">= 0"])
-      s.add_runtime_dependency(%q<json>, [">= 0"])
     else
       s.add_dependency(%q<popen4>, [">= 0"])
-      s.add_dependency(%q<json>, [">= 0"])
-      s.add_dependency(%q<popen4>, [">= 0"])
-      s.add_dependency(%q<json>, [">= 0"])
     end
   else
     s.add_dependency(%q<popen4>, [">= 0"])
-    s.add_dependency(%q<json>, [">= 0"])
-    s.add_dependency(%q<popen4>, [">= 0"])
-    s.add_dependency(%q<json>, [">= 0"])
   end
 end
 
