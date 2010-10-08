@@ -50,7 +50,7 @@ module Paradiso
       args.options do |o|
         o.set_summary_indent '  '
         o.banner = "Usage: #{File.basename $0} [Options]"
-        o.define_head "A simple mplayer CLI"
+        o.define_head "Paradiso #{VERSION}: A simple mplayer CLI"
 
         o.on_tail("-h", "--help", "Show this help message.") { puts o; exit }
         o.on_tail("-v", "--version", "Show version number") { puts "Paradiso %s" % [VERSION]; exit}
@@ -75,7 +75,7 @@ module Paradiso
           options[:path] = path
         }
 
-        o.on("-p", "--playlist", "The argument is a playlist") { 
+        o.on("-p", "--playlist", "The arguments is playlists") { 
           options[:playlist] = true
         }
 
