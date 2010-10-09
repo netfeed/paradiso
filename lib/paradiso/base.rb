@@ -52,7 +52,7 @@ module Paradiso
       str = []
       ratio = @options[:aspectratio]
       
-      str += ['-monitoraspect', ratio, '-aspect', ratio]
+      str += ['-aspect', ratio]
       str << "-fs" if @options[:fullscreen]
       
       # more platforms needs to be added
