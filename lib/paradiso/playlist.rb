@@ -55,7 +55,7 @@ module Paradiso
     end
 
     def create delete=false 
-      sp = delete ? start_point : 0
+      sp = delete ? @current_idx : 0
       
       File.open(@path, 'w') do |f|
         @files[sp..-1].each { |line| f.puts line }
@@ -68,28 +68,17 @@ module Paradiso
     
     def each
       @files.each_index do |idx| 
-        yield @files[idx]
         @current_idx = idx
+        yield @files[idx]
       end
     end
     
     def empty?
-      start_point >= @files.size
+      @current_idx >= @files.size
     end
     
     def started?
       @current_idx > -1
-    end
-    
-    private 
-    
-    def start_point
-      # can this be made in a nicer way?
-      case @current_idx
-        when -1 then 0
-        when 0 then 1
-        else @current_idx + 1
-      end
     end
   end
 end
