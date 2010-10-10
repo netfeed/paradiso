@@ -77,6 +77,10 @@ module Paradiso
       start_point >= @files.size
     end
     
+    def started?
+      @current_idx > -1
+    end
+    
     private 
     
     def start_point

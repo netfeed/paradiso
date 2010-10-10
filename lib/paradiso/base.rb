@@ -41,12 +41,12 @@ module Paradiso
       puts "Exiting..."
     ensure
       @playlist.each do |pl|
-        if @options[:delete] and pl.empty?
-          pl.delete
-        end
-
-        if ((@options[:path] or @options[:delete]) and @options[:playlist]) and not pl.empty?
-          pl.create @options[:delete]
+        if (@options[:path] or @options[:delete]) and @options[:playlist]
+          if pl.started? and not pl.empty?
+            pl.create @options[:delete]
+          elsif pl.empty?
+            pl.delete
+          end
         end
       end
     end
