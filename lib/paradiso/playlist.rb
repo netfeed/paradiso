@@ -18,6 +18,10 @@ module Paradiso
           items << line.sub(/[\r\n]+/, '')
         end
         
+        if items.empty?
+          raise ArgumentError, "no files in playlist #{file}"
+        end
+        
         new items, file
       end
     end

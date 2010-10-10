@@ -24,8 +24,12 @@ module Paradiso
             puts "Warning: playlist %s does not exist" % [pl]
             next
           end
-          
-          @playlist << Playlist.create_from_file(pl)
+
+          begin
+            @playlist << Playlist.create_from_file(pl)
+          rescue ArgumentError => e
+            puts "Warning: #{e}"
+          end
         end
       else
         @playlist << Playlist.new(args, @options[:path])
