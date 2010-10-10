@@ -13,6 +13,11 @@ module Paradiso
       @pid = nil
       @amount_played = 0
 
+      if args.empty?
+        puts "Error: needs atleast one argument"
+        exit 1
+      end
+
       if @options[:playlist] and not @options[:path]
         args.each do |pl|
           unless File.exist? pl
