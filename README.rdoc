@@ -30,6 +30,11 @@ Sample config file, in YAML
 
   fullscreen : true
   aspectratio : "16:10"
+  
+It's also possible to tell where mplayer is located or specify another name
+of mplayer by adding this to the config file:
+
+  player: /usr/local/bin/mplayer
 
 == TODO
 

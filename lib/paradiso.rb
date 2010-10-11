@@ -21,6 +21,7 @@ module Paradiso
     :amount => nil,
     :path => nil,
     :aspectratio => '16:9',
+    :player => 'mplayer'
   }
   
   class << self

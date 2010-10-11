@@ -83,7 +83,7 @@ module Paradiso
 
         puts "Playing #{item}"
 
-        cmd = "mplayer #{options_str} \"#{item}\""
+        cmd = "#{@options[:player]} #{options_str} \"#{item}\""
         POpen4::popen4(cmd) do |stdout, stderr, stdin, pid|
           @pid = pid
         end
