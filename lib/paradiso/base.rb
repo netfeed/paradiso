@@ -82,14 +82,23 @@ module Paradiso
         end
 
         puts "Playing #{item}"
-
-        cmd = "#{@options[:player]} #{options_str} \"#{item}\""
+        
+        play_command = player item
+        item = "-" if @options[:archive]
+        
+        cmd = "#{play_command} #{options_str} \"#{item}\""
         POpen4::popen4(cmd) do |stdout, stderr, stdin, pid|
           @pid = pid
         end
       end
       
       true
+    end
+    
+    def player file
+      return @options[:player] unless @options[:archive]
+      
+      return "#{@options[:unrar]} p -inul #{file} | #{@options[:player]}"
     end
   end
 end

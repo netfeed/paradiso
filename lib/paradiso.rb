@@ -21,7 +21,9 @@ module Paradiso
     :amount => nil,
     :path => nil,
     :aspectratio => '16:9',
-    :player => 'mplayer'
+    :player => 'mplayer',
+    :unrar => 'unrar',
+    :archive => false
   }
   
   class << self
@@ -78,6 +80,10 @@ module Paradiso
 
         o.on("-p", "--playlist", "The arguments is playlists") { 
           options[:playlist] = true
+        }
+
+        o.on("-r", "--rar-archive", "The arguments is rar-archives") { |archive|
+          options[:archive] = archive
         }
 
         o.on("-s", "--screen n", Integer, "Which screen to play from") { |screen|
