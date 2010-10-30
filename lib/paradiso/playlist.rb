@@ -11,7 +11,7 @@ module Paradiso
     include Enumerable
 
     class << self
-      def create_from_file file
+      def create_from_file file, ignore_endings=[]
         items = []
         
         f = File.open(file, 'r').each_line do |line|
@@ -22,11 +22,11 @@ module Paradiso
           raise ArgumentError, "no files in playlist #{file}"
         end
         
-        new items, file
+        new items, file, ignore_endings=[]
       end
     end
     
-    def initialize files, path=nil
+    def initialize files, path=nil, ignore_endings=[]
       @files = []
       @path = path
       @current_idx = -1
@@ -38,6 +38,7 @@ module Paradiso
           
           Find.find(file) do |f|
             next if File.directory? f
+            next if ignore_endings.include? f.split('.')[-1]
             
             if f =~ /(rar|r\d{2})$/
               rar = File.expand_path(f).dup

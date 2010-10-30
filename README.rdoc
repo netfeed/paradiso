@@ -46,6 +46,11 @@ Same goes for unrar:
   
   unrar: /usr/local/bin/unrar
 
+Ignore file endings:
+
+  ignore_endings: ["nfo", "sfv", "txt"] # default
+  ignore_endings: ["avi"]
+
 == TODO
 
 * Better playlist support

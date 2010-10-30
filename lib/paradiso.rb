@@ -23,7 +23,8 @@ module Paradiso
     :aspectratio => '16:9',
     :player => 'mplayer',
     :unrar => 'unrar',
-    :archive => false
+    :archive => false,
+    :ignore_endings => ['nfo', 'sfv', 'txt']
   }
   
   class << self

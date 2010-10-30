@@ -26,13 +26,13 @@ module Paradiso
           end
 
           begin
-            @playlist << Playlist.create_from_file(pl)
+            @playlist << Playlist.create_from_file(pl, @options[:ignore_endings])
           rescue ArgumentError => e
             puts "Warning: #{e}"
           end
         end
       else
-        @playlist << Playlist.new(args, @options[:path])
+        @playlist << Playlist.new(args, @options[:path], @options[:ignore_endings])
       end
     end
     
