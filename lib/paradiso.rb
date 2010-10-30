@@ -82,10 +82,6 @@ module Paradiso
           options[:playlist] = true
         }
 
-        o.on("-r", "--rar-archive", "The arguments is rar-archives") { |archive|
-          options[:archive] = archive
-        }
-
         o.on("-s", "--screen n", Integer, "Which screen to play from") { |screen|
           options[:screen] = screen
         }

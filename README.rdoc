@@ -22,10 +22,9 @@ To play a playlist and remove the items that has been already played
   
 == RAR-archives
 
-It's possible to stream RAR-archives, although pretty limited at the moment. There's plans on making this better, but right not it's only possible to 
-stream RAR-archives if each file-argument to paradiso is added one at the time, directories won't currently work, i.e.:
+It's possible to stream rar-archives, it works exactly like other parameters, but will remove "duplicates", i.e. if there's a filename.rar, filename.r00 and filename.r01 then we'll just keep the first occurrence.
 
-  paradiso -r path/to/archive/filename.rar path/to/otherARchive/filename.r00
+Note: There seems to be a problem with the unrar installed from the package manager port[http://www.macports.org/] for Mac OS X, but everything seems to work fine for the version installed through homebrew[http://github.com/mxcl/homebrew].
   
 == Config file
 
@@ -49,7 +48,6 @@ Same goes for unrar:
 
 == TODO
 
-* Better handling of rar-archives
 * Better playlist support
 * Other mediums then just avi et al(DVD, Bluray and so on)
 * Handle meta-data

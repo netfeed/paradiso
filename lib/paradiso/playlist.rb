@@ -34,9 +34,23 @@ module Paradiso
       files.each do |file|
         begin 
           tmp = []
+          rars = []
           
           Find.find(file) do |f|
-            tmp << File.expand_path(f) unless File.directory? f
+            next if File.directory? f
+            
+            if f =~ /(rar|r\d{2})$/
+              rar = File.expand_path(f).dup
+              rar.gsub! /r\d{2}$/i, "rar"
+              rar.gsub! /part\d{2}/i, ""
+              
+              unless rars.include? rar
+                rars << rar
+                tmp << File.expand_path(f)
+              end
+            else 
+              tmp << File.expand_path(f)  
+            end
           end
           
           @files += tmp.sort
