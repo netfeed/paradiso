@@ -22,7 +22,7 @@ module Paradiso
           raise ArgumentError, "no files in playlist #{file}"
         end
         
-        new items, file, ignore_endings=[]
+        new items, file, ignore_endings
       end
     end
     
