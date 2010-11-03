@@ -45,13 +45,11 @@ module Paradiso
               rar.gsub! /r\d{2}$/i, "rar"
               rar.gsub! /part\d{2}/i, ""
               
-              unless rars.include? rar
-                rars << rar
-                tmp << File.expand_path(f)
-              end
-            else 
-              tmp << File.expand_path(f)  
+              next if rars.include? rar
+              rars << rar
             end
+            
+            tmp << File.expand_path(f)
           end
           
           @files += tmp.sort
