@@ -102,7 +102,7 @@ module Paradiso
     
     def timestamp
       return "" unless @options[:timestamp]
-      Time.now.strftime("%Y-%M-%d %H:%m - ")
+      Time.now.strftime("%Y-%m-%d %H:%M - ")
     end
   end
 end
