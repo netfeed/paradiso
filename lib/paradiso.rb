@@ -25,7 +25,7 @@ module Paradiso
     :unrar => 'unrar',
     :archive => false,
     :ignore_endings => ['nfo', 'sfv', 'txt'],
-    :timestamps => false,
+    :timestamp => false,
   }
   
   class << self
