@@ -81,7 +81,7 @@ module Paradiso
           @amount_played += 1
         end
 
-        puts "Playing #{item}"
+        puts "#{timestamp}Playing #{item}"
         
         play_command = player item
         item = "-" if item =~ /(rar|r\d{2})$/
@@ -98,6 +98,11 @@ module Paradiso
     def player file
       return @options[:player] unless file =~ /(rar|r\d{2})$/
       return "#{@options[:unrar]} p -inul #{file} | #{@options[:player]}"
+    end
+    
+    def timestamp
+      return "" unless @options[:timestamp]
+      Time.now.strftime("%Y-%M-%d %H:%m - ")
     end
   end
 end

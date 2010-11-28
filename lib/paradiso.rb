@@ -24,7 +24,8 @@ module Paradiso
     :player => 'mplayer',
     :unrar => 'unrar',
     :archive => false,
-    :ignore_endings => ['nfo', 'sfv', 'txt']
+    :ignore_endings => ['nfo', 'sfv', 'txt'],
+    :timestamps => false,
   }
   
   class << self
