@@ -91,7 +91,7 @@ module Paradiso
     end
     
     def empty?
-      @current_idx >= @files.size
+      (@current_idx + 1) >= @files.size
     end
     
     def started?
