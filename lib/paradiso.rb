@@ -43,9 +43,7 @@ module Paradiso
       config_file = File.expand_path('~/.paradiso')
       if File.exist? config_file
         yaml = YAML::load(File.open(config_file, 'r').read())
-        yaml.each_pair do |key, value|
-          options[key.to_sym] = value
-        end
+        yaml.inject(options) { |memo, o| memo[o.first.to_sym] = o.last; memo }
       end
 
       return options
