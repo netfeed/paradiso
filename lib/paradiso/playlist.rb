@@ -84,9 +84,9 @@ module Paradiso
     end
     
     def each
-      @files.each_index do |idx| 
+      @files.each_with_index do |file, idx| 
         @current_idx = idx
-        yield @files[idx]
+        yield file
       end
     end
     
