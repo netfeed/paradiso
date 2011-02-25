@@ -32,6 +32,7 @@ module Paradiso
           end
         end
       else
+        raise ArgumentError.new "the playlist '#{@options[:path]}' does already exists" if File.exists? @options[:path]
         @playlist << Playlist.new(args, @options[:path], @options[:ignore_endings])
       end
     end

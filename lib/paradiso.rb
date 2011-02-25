@@ -35,6 +35,9 @@ module Paradiso
       
       para = Paradiso.new options, args
       para.run
+    rescue ArgumentError => e
+      puts "Error: #{e}"
+      exit 1
     end
     
     def config_file 
