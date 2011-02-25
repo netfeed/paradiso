@@ -30,6 +30,7 @@ module Paradiso
       @files = []
       @path = path
       @current_idx = -1
+      @done = false
             
       files.each do |file|
         begin 
@@ -88,10 +89,12 @@ module Paradiso
         @current_idx = idx
         yield file
       end
+      
+      @done = true
     end
     
     def empty?
-      (@current_idx + 1) >= @files.size
+      @done
     end
     
     def started?
