@@ -66,6 +66,8 @@ module Paradiso
       
       str += ['-aspect', ratio]
       str << "-fs" if @options[:fullscreen]
+      str << "-noautosub" unless @options[:autosubs]
+      str << "-nosub" unless @options[:autosubs]
       
       # more platforms needs to be added
       if RUBY_PLATFORM =~ /darwin10/

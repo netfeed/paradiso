@@ -26,6 +26,7 @@ module Paradiso
     :archive => false,
     :ignore_endings => ['nfo', 'sfv', 'txt'],
     :timestamp => false,
+    :autosubs => false,
   }
   
   class << self
@@ -87,6 +88,10 @@ module Paradiso
 
         o.on("-s", "--screen n", Integer, "Which screen to play from") { |screen|
           options[:screen] = screen
+        }
+
+        o.on("-S", "--autosubs", "Load automatic subs") {
+          options[:autosubs] = true
         }
 
         o.parse!
