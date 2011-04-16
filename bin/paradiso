@@ -6,4 +6,55 @@
 require 'rubygems'
 require File.expand_path('../../lib/paradiso', __FILE__)
 
-Paradiso.run 
+options = Paradiso.config_file 
+
+ARGV.options do |o|
+  o.set_summary_indent '  '
+  o.banner = "Usage: #{File.basename $0} [Options] Files|Dirs"
+  o.define_head "Paradiso #{Paradiso::VERSION}: A simple mplayer CLI"
+
+  o.on_tail("-h", "--help", "Show this help message.") { puts o; exit }
+  o.on_tail("-v", "--version", "Show version number") { puts "Paradiso %s" % [Paradiso::VERSION]; exit}
+
+  o.on("-a", "--amount n", Integer, "Play [n] items") { |amount|
+    options[:amount] = amount
+  }
+
+  o.on("-A", "--aspect-ratio n", String, "Aspect ratio - 16:9, 4:3..") { |ratio|
+    options[:aspectratio] = ratio
+  }
+
+  o.on("-d", "--delete", "Delete items from paylist") { 
+    options[:delete] = true
+  }
+
+  o.on("-f", "--fullscreen", "Fullscreen mode") { 
+    options[:fullscreen] = true
+  } 
+
+  o.on("-n", "--name path", String, "Playlist path to create") { |path|
+    options[:path] = path
+  }
+
+  o.on("-p", "--playlist", "The arguments is playlists") { 
+    options[:playlist] = true
+  }
+
+  o.on("-s", "--screen n", Integer, "Which screen to play from") { |screen|
+    options[:screen] = screen
+  }
+
+  o.on("-S", "--autosubs", "Load automatic subs") {
+    options[:autosubs] = true
+  }
+
+  o.parse!
+end
+
+begin
+  para = Paradiso::Paradiso.new options, ARGV
+  para.run
+rescue ArgumentError => e
+  puts "Error: #{e}"
+  exit 1
+end
