@@ -102,7 +102,7 @@ module Paradiso
     
     def player file
       return @options[:player] unless file =~ /(rar|r\d{2})$/
-      return "#{@options[:unrar]} p -inul #{file} | #{@options[:player]}"
+      return "#{@options[:unrar]} p -inul \"#{file}\" | #{@options[:player]}"
     end
     
     def timestamp
