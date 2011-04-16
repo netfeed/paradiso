@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{paradiso}
-  s.version = "0.4.2"
+  s.version = "0.4.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Victor Bergoo"]
-  s.date = %q{2011-03-03}
+  s.date = %q{2011-04-16}
   s.default_executable = %q{paradiso}
   s.description = %q{A simplified mplayer command line interface}
   s.email = %q{victor.bergoo@gmail.com}
